@@ -8,17 +8,39 @@ void getRequestSequence(vector<int> &reqArray)
     int input;
     cout << "Enter the amount of sequences to add: ";
     cin >> maxSeq;
+
     for (int i = 0; i < maxSeq; i++)
     {
-        cout << endl
-             << "Enter sequence " << i << " : ";
+        cout
+            << "Enter sequence " << i + 1 << " : ";
         cin >> input;
         reqArray.push_back(input);
     }
 }
 
-void fcfs()
+void printArray(vector<int> &array)
 {
+    for (int i = 0; i < array.size(); i++)
+    {
+        cout << array[i] << endl;
+    }
+}
+
+void fcfs(vector<int> reqSequence, int headPosition)
+{
+    int seekTime = 0;
+    vector<int> visitSeq;
+
+    for (int i = 0; i < reqSequence.size(); i++)
+    {
+        seekTime += abs(reqSequence[i] - headPosition);
+        headPosition = reqSequence[i];
+    }
+    cout << endl
+         << "Total Seek Time of Disk is: " << seekTime << endl;
+    cout << endl
+         << "Seek Sequence is: " << endl;
+    printArray(reqSequence);
 }
 
 int main()
@@ -33,8 +55,11 @@ int main()
     getRequestSequence(reqSequence);
 
     // Getting the current head position
-    cout << "Enter the current location of the head: ";
+    cout << endl
+         << "Enter the current location of the head: ";
     cin >> head;
 
+    // FCFS Scheduler
+    fcfs(reqSequence, head);
     return 0;
 }
